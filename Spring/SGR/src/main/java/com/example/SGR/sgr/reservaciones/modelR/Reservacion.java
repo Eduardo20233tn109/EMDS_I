@@ -1,5 +1,7 @@
-package com.example.SGR.sgr.model;
+package com.example.SGR.sgr.reservaciones.modelR;
 
+import com.example.SGR.sgr.servicios.modelS.Servicio;
+import com.example.SGR.sgr.usuariosP.modelU.Usuario;
 import jakarta.persistence.*;
 
 @Entity

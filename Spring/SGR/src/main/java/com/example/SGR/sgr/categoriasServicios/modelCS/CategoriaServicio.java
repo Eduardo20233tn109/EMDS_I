@@ -1,5 +1,6 @@
-package com.example.SGR.sgr.model;
+package com.example.SGR.sgr.categoriasServicios.modelCS;
 
+import com.example.SGR.sgr.servicios.modelS.Servicio;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

@@ -1,5 +1,7 @@
-package com.example.SGR.sgr.model;
+package com.example.SGR.sgr.servicios.modelS;
 
+import com.example.SGR.sgr.categoriasServicios.modelCS.CategoriaServicio;
+import com.example.SGR.sgr.reservaciones.modelR.Reservacion;
 import jakarta.persistence.*;
 
 import java.util.List;
