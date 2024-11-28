@@ -2,10 +2,13 @@ package com.example.SGR.sgr.usuariosP.controllerU;
 
 import com.example.SGR.sgr.usuariosP.modelU.Usuario;
 import com.example.SGR.sgr.usuariosP.utilsU.UsuarioRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -16,16 +19,27 @@ public class UsuarioController {
     public UsuarioController(UsuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
     }
-
-    // Registrar un usuario
     @PostMapping("/registrar")
-    public ResponseEntity<Usuario> registrarUsuario(@RequestBody Usuario usuario) {
-        usuario.setStatus(true); // Por defecto, el usuario está habilitado
-        return ResponseEntity.ok(usuarioRepository.save(usuario));
+    public ResponseEntity<?> registrarUsuario(@RequestBody Usuario usuario) {
+        // Validar si el correo ya está registrado
+        if (usuarioRepository.existsByCorreoElectronico(usuario.getCorreoElectronico())) {
+            return ResponseEntity.badRequest().body(Map.of("mensaje", "El correo electrónico ya está registrado."));
+        }
+        // Validar si el número de teléfono ya está registrado
+        if (usuarioRepository.existsByTelefono(usuario.getTelefono())) {
+            return ResponseEntity.badRequest().body(Map.of("mensaje", "El número de teléfono ya está registrado."));
+        }
+        // Configurar el estado por defecto como habilitado
+        usuario.setStatus(true);
+        Usuario usuarioGuardado = usuarioRepository.save(usuario);
+
+        return ResponseEntity.ok(usuarioGuardado);
     }
 
+
+
     // Consultar todos los usuarios
-    @GetMapping
+    @GetMapping("/lista-usuarios")
     public List<Usuario> obtenerUsuarios() {
         return usuarioRepository.findAll();
     }
@@ -62,7 +76,7 @@ public class UsuarioController {
 
 
 
-
+/*
     @PostMapping("/iniciar-sesion")
     public ResponseEntity<String> iniciarSesion(@RequestBody Usuario usuario) {
         System.out.println("Correo: " + usuario.getCorreoElectronico());  // Para verificar el correo
@@ -75,6 +89,33 @@ public class UsuarioController {
                 .map(u -> ResponseEntity.ok("Sesión iniciada correctamente"))
                 .orElse(ResponseEntity.status(401).body("Credenciales inválidas"));
     }
+
+ */
+@PostMapping("/iniciar-sesion")
+public ResponseEntity<Map<String, Object>> iniciarSesion(@RequestBody Usuario usuario) {
+    Map<String, Object> response = new HashMap<>();
+
+    if (usuario.getCorreoElectronico() == null || usuario.getContrasena() == null) {
+        response.put("mensaje", "Correo o contraseña no proporcionados");
+        response.put("success", false);
+        return ResponseEntity.status(400).body(response); // Devolvemos un JSON con el mensaje y el estado
+    }
+
+    return usuarioRepository.findByCorreoElectronico(usuario.getCorreoElectronico())
+            .filter(u -> u.getContrasena().equals(usuario.getContrasena()))
+            .map(u -> {
+                response.put("mensaje", "Sesión iniciada correctamente");
+                response.put("success", true);
+                response.put("role", u.getRol()); // Suponiendo que el rol está en el objeto usuario
+                return ResponseEntity.ok(response); // Devolvemos el JSON con el mensaje y el rol
+            })
+            .orElseGet(() -> {
+                response.put("mensaje", "Credenciales inválidas");
+                response.put("success", false);
+                return ResponseEntity.status(401).body(response); // Devolvemos un JSON con el mensaje y el estado
+            });
+}
+
 
 
 

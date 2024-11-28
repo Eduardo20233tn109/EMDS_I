@@ -1,5 +1,3 @@
-// registro.js
-
 document.getElementById("registroForm").addEventListener("submit", function(event) {
     event.preventDefault(); // Prevenir el envío tradicional del formulario
 

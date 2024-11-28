@@ -4,21 +4,117 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar sesión</title>
+    <!-- Agregar enlace CDN de Bootstrap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-pzjw8f+ua7Kw1TIq0x5B5sL6z5C7oDUR6dxoDjkVYhP2p1fuFhuVOJzd42etYv8X" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #f4f6f9;
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+        .form-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .form-group label {
+            font-weight: bold;
+            color: #555;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            border-radius: 5px;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .alert {
+            margin-top: 15px;
+            display: none;
+        }
+    </style>
 </head>
 <body>
-<h2>Iniciar sesión</h2>
-<form id="loginForm">
-    <label for="correoElectronico">Correo Electrónico:</label>
-    <input type="email" id="correoElectronico" name="correoElectronico" required><br><br>
 
-    <label for="contrasena">Contraseña:</label>
-    <input type="password" id="contrasena" name="contrasena" required><br><br>
+<div class="form-container">
+    <h2>Iniciar sesión</h2>
+    <form id="loginForm">
+        <div class="form-group">
+            <label for="correoElectronico">Correo Electrónico:</label>
+            <input type="email" class="form-control" id="correoElectronico" name="correoElectronico" required>
+        </div>
 
-    <button type="submit">Iniciar sesión</button>
-</form>
+        <div class="form-group">
+            <label for="contrasena">Contraseña:</label>
+            <input type="password" class="form-control" id="contrasena" name="contrasena" required>
+        </div>
 
-<div id="respuesta"></div>
+        <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+    </form>
 
-<script src="Spring/SGR/src/main/java/com/example/SGR/diseño/scrips/Scriptts.js"></script>
+    <div id="respuesta" class="alert alert-danger mt-3" role="alert">
+        Usuario o contraseña incorrectos.
+    </div>
+</div>
+
+<script>
+    document.getElementById('loginForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const correoElectronico = document.getElementById('correoElectronico').value;
+        const contrasena = document.getElementById('contrasena').value;
+
+        const data = {
+            correoElectronico: correoElectronico,
+            contrasena: contrasena
+        };
+
+        const respuesta = document.getElementById('respuesta');
+        respuesta.style.display = "none"; // Ocultar respuesta anterior
+
+        fetch('http://localhost:8080/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                if (response.ok) {
+                    // Simular redirección o acción exitosa
+                    alert('Inicio de sesión exitoso');
+                } else {
+                    throw new Error('Usuario o contraseña incorrectos');
+                }
+            })
+            .catch(error => {
+                // Mostrar mensaje de error
+                respuesta.textContent = error.message;
+                respuesta.style.display = "block";
+            });
+    });
+</script>
+
+<!-- Scripts CDN de Bootstrap -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zyGqKtv2T3cCkRmc5jmuxG8B6+L7os3LJeaNHjjs" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-mQ93VdZvKzO6Qzmg5Sx3tvoVJeQ1Kn4wgr80tOBt9yF30ZHrJ66Ejkc6AdXlkOp7" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-pzjw8f+ua7Kw1TIq0x5B5sL6z5C7oDUR6dxoDjkVYhP2p1fuFhuVOJzd42etYv8X" crossorigin="anonymous"></script>
+
 </body>
 </html>
