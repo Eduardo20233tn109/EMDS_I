@@ -20,6 +20,13 @@
                     <label for="password" class="form-label">Contraseña</label>
                     <input type="password" class="form-control" id="password" required>
                 </div>
+                <div class="mb-3">
+                    <label for="rol" class="form-label">Rol</label>
+                    <select id="rol" class="form-select" required>
+                        <option value="ADMIN">Administrador</option>
+                        <option value="USER">Usuario</option>
+                    </select>
+                </div>
                 <div class="d-flex justify-content-between">
                     <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
                     <a href="registro.html" class="btn btn-link">¿No tienes cuenta? Regístrate aquí</a>
@@ -28,12 +35,14 @@
         </div>
     </div>
 </div>
+
 <script>
     document.getElementById("loginForm").addEventListener("submit", async (event) => {
         event.preventDefault();
 
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
+        const rol = document.getElementById("rol").value; // Obtén el valor del campo de rol
 
         try {
             const response = await fetch("http://localhost:8080/api/usuarios/iniciar-sesion", {
@@ -43,25 +52,25 @@
                 },
                 body: JSON.stringify({
                     correoElectronico: email,
-                    contrasena: password
+                    contrasena: password,
+                    rol: rol // Incluye el rol en la solicitud
                 })
             });
 
-            const data = await response.json(); // Obtener la respuesta como JSON
+            const data = await response.json();
 
             if (response.ok) {
-                // Si la sesión es exitosa, redirige según el rol
-                if (data.rol === "ADMIN") { // Ajustar el campo según tu API
-                    window.location.href = "Usuarios.html"; // Página de administrador
+                if (data.rol === "ADMIN") { // Usar "rol", como definido en el backend
+                    window.location.href = "Usuarios.html";
                 } else if (data.rol === "USER") {
-                    window.location.href = "Usuario.html"; // Página de usuario
+                    window.location.href = "prueba.html";
                 } else {
                     alert("Rol desconocido. Contacta al administrador.");
                 }
             } else {
-                // Si las credenciales son incorrectas
-                alert(data.mensaje || "Credenciales incorrectas."); // Mostrar el mensaje de error
+                alert(data.mensaje || "Credenciales incorrectas.");
             }
+
         } catch (error) {
             console.error("Error:", error);
             alert("Hubo un error al intentar iniciar sesión. Por favor, inténtalo de nuevo.");

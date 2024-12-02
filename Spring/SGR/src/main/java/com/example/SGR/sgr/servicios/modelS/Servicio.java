@@ -23,6 +23,16 @@ public class Servicio {
     @OneToMany(mappedBy = "servicio", cascade = CascadeType.ALL)
     private List<Reservacion> reservaciones;
 
+    public Servicio(String s, String s1, boolean b) {
+        this.nombre = s;
+        this.descripcion = s1;
+        this.status = b;
+    }
+
+    public Servicio() {
+
+    }
+
     public Long getId() {
         return id;
     }

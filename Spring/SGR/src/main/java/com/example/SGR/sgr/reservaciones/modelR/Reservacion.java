@@ -22,6 +22,17 @@ public class Reservacion {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
+    public Reservacion(String s, String s1, boolean b) {
+        this.nombre = s;
+        this.descripcion = s1;
+        this.status = b;
+    }
+
+    public Reservacion() {
+
+    }
+
+
     public Long getId() {
         return id;
     }

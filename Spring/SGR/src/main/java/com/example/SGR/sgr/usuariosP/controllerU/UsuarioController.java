@@ -98,7 +98,7 @@ public ResponseEntity<Map<String, Object>> iniciarSesion(@RequestBody Usuario us
     if (usuario.getCorreoElectronico() == null || usuario.getContrasena() == null) {
         response.put("mensaje", "Correo o contraseña no proporcionados");
         response.put("success", false);
-        return ResponseEntity.status(400).body(response); // Devolvemos un JSON con el mensaje y el estado
+        return ResponseEntity.status(400).body(response);
     }
 
     return usuarioRepository.findByCorreoElectronico(usuario.getCorreoElectronico())
@@ -106,15 +106,16 @@ public ResponseEntity<Map<String, Object>> iniciarSesion(@RequestBody Usuario us
             .map(u -> {
                 response.put("mensaje", "Sesión iniciada correctamente");
                 response.put("success", true);
-                response.put("role", u.getRol()); // Suponiendo que el rol está en el objeto usuario
-                return ResponseEntity.ok(response); // Devolvemos el JSON con el mensaje y el rol
+                response.put("rol", u.getRol()); // Asegúrate de devolver "rol"
+                return ResponseEntity.ok(response);
             })
             .orElseGet(() -> {
                 response.put("mensaje", "Credenciales inválidas");
                 response.put("success", false);
-                return ResponseEntity.status(401).body(response); // Devolvemos un JSON con el mensaje y el estado
+                return ResponseEntity.status(401).body(response);
             });
 }
+
 
 
 
