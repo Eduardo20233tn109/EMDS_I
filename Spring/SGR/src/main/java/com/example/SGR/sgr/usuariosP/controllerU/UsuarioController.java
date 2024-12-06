@@ -52,18 +52,21 @@ public class UsuarioController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // Editar un usuario
-    @PutMapping("/{id}")
+    @PutMapping("editar/{id}")
     public ResponseEntity<Usuario> editarUsuario(@PathVariable Long id, @RequestBody Usuario usuarioActualizado) {
         return usuarioRepository.findById(id).map(usuario -> {
+            // Actualizar los datos del usuario, incluyendo la contraseña
             usuario.setNombre(usuarioActualizado.getNombre());
             usuario.setApellidos(usuarioActualizado.getApellidos());
             usuario.setCorreoElectronico(usuarioActualizado.getCorreoElectronico());
             usuario.setTelefono(usuarioActualizado.getTelefono());
+            usuario.setContrasena(usuarioActualizado.getContrasena()); // Actualiza la contraseña
             usuario.setRol(usuarioActualizado.getRol());
+            usuario.setStatus(usuarioActualizado.getStatus());
             return ResponseEntity.ok(usuarioRepository.save(usuario));
         }).orElse(ResponseEntity.notFound().build());
     }
+
 
     @PatchMapping("/{id}/estado")
     public ResponseEntity<Usuario> cambiarEstado(@PathVariable Long id, @RequestParam Boolean estado) {
@@ -115,9 +118,4 @@ public ResponseEntity<Map<String, Object>> iniciarSesion(@RequestBody Usuario us
                 return ResponseEntity.status(401).body(response);
             });
 }
-
-
-
-
-
 }

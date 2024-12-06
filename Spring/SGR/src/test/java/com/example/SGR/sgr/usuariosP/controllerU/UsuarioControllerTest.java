@@ -125,7 +125,7 @@ class UsuarioControllerTest {
         when(usuarioRepository.findById(1L)).thenReturn(Optional.of(usuarioExistente));
         when(usuarioRepository.save(any(Usuario.class))).thenReturn(usuarioActualizado);
 
-        ResponseEntity<Usuario> response = usuarioController.editarUsuario(1L, usuarioActualizado);
+        ResponseEntity<Usuario> response = (ResponseEntity<Usuario>) usuarioController.editarUsuario(1L, usuarioActualizado);
 
         assertEquals(200, response.getStatusCodeValue());
         assertNotNull(response.getBody());
@@ -140,7 +140,7 @@ class UsuarioControllerTest {
 
         when(usuarioRepository.findById(999L)).thenReturn(Optional.empty());
 
-        ResponseEntity<Usuario> response = usuarioController.editarUsuario(999L, usuarioActualizado);
+        ResponseEntity<Usuario> response = (ResponseEntity<Usuario>) usuarioController.editarUsuario(999L, usuarioActualizado);
 
         assertEquals(404, response.getStatusCodeValue());
         assertNull(response.getBody());

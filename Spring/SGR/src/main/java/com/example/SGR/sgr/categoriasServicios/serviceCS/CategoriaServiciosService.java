@@ -31,14 +31,15 @@ public class CategoriaServiciosService {
         return categoriaServicioRepository.findByStatus(true);
     }
 
-    // Actualizar una categoría
     public Optional<CategoriaServicio> actualizarCategoria(Long id, CategoriaServicio categoriaActualizada) {
-        return categoriaServicioRepository.findById(id).map(categoria -> {
-            categoria.setNombre(categoriaActualizada.getNombre());
-            categoria.setDescripcion(categoriaActualizada.getDescripcion());
-            return categoriaServicioRepository.save(categoria);
+        return categoriaServicioRepository.findById(id).map(categoriaExistente -> {
+            categoriaExistente.setNombre(categoriaActualizada.getNombre());
+            categoriaExistente.setDescripcion(categoriaActualizada.getDescripcion());
+            categoriaExistente.setStatus(categoriaActualizada.getStatus());
+            return categoriaServicioRepository.save(categoriaExistente);
         });
     }
+
 
     // Cambiar el estado de una categoría
     public Optional<CategoriaServicio> cambiarEstadoCategoria(Long id, Boolean nuevoEstado) {
@@ -47,4 +48,9 @@ public class CategoriaServiciosService {
             return categoriaServicioRepository.save(categoria);
         });
     }
+    public Optional<CategoriaServicio> obtenerCategoriaPorId(Long id) {
+        return categoriaServicioRepository.findById(id); // Busca en la base de datos por ID
+    }
+
+
 }

@@ -36,7 +36,7 @@ public class CategoriaServiciosController {
     }
 
     // Actualizar una categoría
-    @PutMapping("{id}")
+    @PutMapping("editar/{id}")
     public ResponseEntity<CategoriaServicio> actualizarCategoria(@PathVariable Long id, @RequestBody CategoriaServicio categoria) {
         return categoriaServiciosService.actualizarCategoria(id, categoria)
                 .map(ResponseEntity::ok)
@@ -50,4 +50,13 @@ public class CategoriaServiciosController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    // Obtener una categoría específica por ID
+    @GetMapping("/editar/{id}")
+    public ResponseEntity<CategoriaServicio> obtenerCategoriaPorId(@PathVariable Long id) {
+        return categoriaServiciosService.obtenerCategoriaPorId(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
 }
