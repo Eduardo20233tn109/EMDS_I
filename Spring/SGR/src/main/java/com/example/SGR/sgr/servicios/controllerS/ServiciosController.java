@@ -1,5 +1,7 @@
 package com.example.SGR.sgr.servicios.controllerS;
 
+import com.example.SGR.sgr.categoriasServicios.modelCS.CategoriaServicio;
+import com.example.SGR.sgr.categoriasServicios.utilsCS.CategoriaServicioRepository;
 import com.example.SGR.sgr.servicios.modelS.Servicio;
 import com.example.SGR.sgr.servicios.serviceS.ServicioService;
 import org.springframework.http.ResponseEntity;
@@ -13,16 +15,20 @@ import java.util.List;
 public class ServiciosController {
 
     private final ServicioService servicioService;
+    private final CategoriaServicioRepository categoriaServicioRepository;
 
-    public ServiciosController(ServicioService servicioService) {
+    public ServiciosController(ServicioService servicioService, CategoriaServicioRepository categoriaServicioRepository) {
         this.servicioService = servicioService;
+        this.categoriaServicioRepository = categoriaServicioRepository;
     }
 
     // Registrar un nuevo servicio
     @PostMapping("/registrar")
     public ResponseEntity<Servicio> registrarServicio(@RequestBody Servicio servicio) {
-        return ResponseEntity.ok(servicioService.registrarServicio(servicio));
+        Servicio nuevoServicio = servicioService.registrarServicio(servicio);
+        return ResponseEntity.ok(nuevoServicio);
     }
+
 
     // Consultar todos los servicios
     @GetMapping("/consultar")

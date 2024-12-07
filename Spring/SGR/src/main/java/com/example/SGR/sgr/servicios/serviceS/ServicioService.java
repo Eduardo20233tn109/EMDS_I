@@ -1,5 +1,7 @@
 package com.example.SGR.sgr.servicios.serviceS;
 
+import com.example.SGR.sgr.categoriasServicios.modelCS.CategoriaServicio;
+import com.example.SGR.sgr.categoriasServicios.utilsCS.CategoriaServicioRepository;
 import com.example.SGR.sgr.servicios.modelS.Servicio;
 import com.example.SGR.sgr.servicios.utilsS.ServicioRepository;
 import org.springframework.stereotype.Service;
@@ -11,15 +13,30 @@ import java.util.Optional;
 public class ServicioService {
 
     private final ServicioRepository servicioRepository;
+    private final CategoriaServicioRepository categoriaServicioRepository;
 
-    public ServicioService(ServicioRepository servicioRepository) {
+    public ServicioService(ServicioRepository servicioRepository, CategoriaServicioRepository categoriaServicioRepository) {
         this.servicioRepository = servicioRepository;
+        this.categoriaServicioRepository = categoriaServicioRepository;
     }
 
     // Registrar un nuevo servicio
     public Servicio registrarServicio(Servicio servicio) {
+        if (servicio.getCategoria() != null && servicio.getCategoria().getId() != null) {
+            // Buscar la categoría en la base de datos
+            CategoriaServicio categoria = categoriaServicioRepository.findById(servicio.getCategoria().getId())
+                    .orElseThrow(() -> new IllegalArgumentException("Categoría no encontrada con ID: " + servicio.getCategoria().getId()));
+            // Asignar la categoría encontrada al servicio
+            servicio.setCategoria(categoria);
+        } else {
+            throw new IllegalArgumentException("La categoría es requerida para registrar un servicio.");
+        }
+
+        // Guardar el servicio en la base de datos
         return servicioRepository.save(servicio);
     }
+
+
 
     // Consultar todos los servicios
     public List<Servicio> consultarServicios() {

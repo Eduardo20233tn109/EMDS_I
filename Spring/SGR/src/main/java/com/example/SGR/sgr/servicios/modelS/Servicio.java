@@ -2,6 +2,8 @@ package com.example.SGR.sgr.servicios.modelS;
 
 import com.example.SGR.sgr.categoriasServicios.modelCS.CategoriaServicio;
 import com.example.SGR.sgr.reservaciones.modelR.Reservacion;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -18,6 +20,7 @@ public class Servicio {
 
     @ManyToOne
     @JoinColumn(name = "categoria_id")
+    @JsonBackReference
     private CategoriaServicio categoria;
 
     @OneToMany(mappedBy = "servicio", cascade = CascadeType.ALL)
