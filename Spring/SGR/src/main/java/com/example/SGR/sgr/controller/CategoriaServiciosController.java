@@ -1,7 +1,6 @@
-package com.example.SGR.sgr.categoriasServicios.controllerCS;
+package com.example.SGR.sgr.controller;
 
-import com.example.SGR.sgr.categoriasServicios.modelCS.CategoriaServicio;
-import com.example.SGR.sgr.categoriasServicios.serviceCS.CategoriaServiciosService;
+import com.example.SGR.sgr.model.CategoriaServicio;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

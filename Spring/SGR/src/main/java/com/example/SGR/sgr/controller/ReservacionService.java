@@ -1,7 +1,7 @@
-package com.example.SGR.sgr.reservaciones.serviceR;
+package com.example.SGR.sgr.controller;
 
-import com.example.SGR.sgr.reservaciones.modelR.Reservacion;
-import com.example.SGR.sgr.reservaciones.utilsR.ReservacionRepository;
+import com.example.SGR.sgr.model.Reservacion;
+import com.example.SGR.sgr.utils.ReservacionRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,7 +37,6 @@ public class ReservacionService {
             reservacion.setNombre(reservacionActualizada.getNombre());
             reservacion.setDescripcion(reservacionActualizada.getDescripcion());
             reservacion.setServicio(reservacionActualizada.getServicio());
-            reservacion.setUsuario(reservacionActualizada.getUsuario());
             return reservacionRepository.save(reservacion);
         });
     }

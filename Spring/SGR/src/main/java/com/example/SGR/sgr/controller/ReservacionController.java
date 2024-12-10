@@ -1,7 +1,6 @@
-package com.example.SGR.sgr.reservaciones.controllerR;
+package com.example.SGR.sgr.controller;
 
-import com.example.SGR.sgr.reservaciones.modelR.Reservacion;
-import com.example.SGR.sgr.reservaciones.serviceR.ReservacionService;
+import com.example.SGR.sgr.model.Reservacion;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

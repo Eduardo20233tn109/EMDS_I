@@ -1,8 +1,9 @@
 package com.example.SGR.sgr.servicios.controllerS;
 
-import com.example.SGR.sgr.servicios.modelS.Servicio;
-import com.example.SGR.sgr.servicios.serviceS.ServicioService;
-import com.example.SGR.sgr.servicios.utilsS.ServicioRepository;
+import com.example.SGR.sgr.model.CategoriaServicio;
+import com.example.SGR.sgr.model.Servicio;
+import com.example.SGR.sgr.controller.ServicioService;
+import com.example.SGR.sgr.utils.ServicioRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -14,18 +15,29 @@ import static org.junit.jupiter.api.Assertions.*;
 class ServiciosControllerTest {
     private final ServicioRepository servicioRepository = Mockito.mock(ServicioRepository.class);
     private final ServicioService servicioService = new ServicioService(servicioRepository);
-
     @Test
     void registrarServicio_exitoso() {
+        // Crear una categoría de prueba
+        CategoriaServicio categoria = new CategoriaServicio();
+        categoria.setId(1L); // Asegúrate de asignar un ID válido
+        categoria.setNombre("Categoría de Prueba");
+        categoria.setDescripcion("Descripción de la categoría");
+        categoria.setStatus(true);
+
+        // Crear el servicio de prueba
         Servicio nuevoServicio = new Servicio();
         nuevoServicio.setNombre("Servicio de Prueba");
         nuevoServicio.setDescripcion("Descripción de prueba");
         nuevoServicio.setStatus(true);
+        nuevoServicio.setCategoria(categoria);  // Asignar la categoría al servicio
 
+        // Mock para el repositorio
         Mockito.when(servicioRepository.save(Mockito.any(Servicio.class))).thenReturn(nuevoServicio);
 
+        // Llamada al servicio para registrar el servicio
         Servicio resultado = servicioService.registrarServicio(nuevoServicio);
 
+        // Verificar que el resultado no sea nulo y que el nombre sea correcto
         assertNotNull(resultado);
         assertEquals("Servicio de Prueba", resultado.getNombre());
     }

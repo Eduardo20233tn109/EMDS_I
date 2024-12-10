@@ -1,15 +1,14 @@
-package com.example.SGR.sgr.servicios.modelS;
+package com.example.SGR.sgr.model;
 
-import com.example.SGR.sgr.categoriasServicios.modelCS.CategoriaServicio;
-import com.example.SGR.sgr.reservaciones.modelR.Reservacion;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
 public class Servicio {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,10 +19,10 @@ public class Servicio {
 
     @ManyToOne
     @JoinColumn(name = "categoria_id")
-    @JsonBackReference
     private CategoriaServicio categoria;
 
     @OneToMany(mappedBy = "servicio", cascade = CascadeType.ALL)
+    @JsonIgnore // Evita la recursión hacia Reservacion
     private List<Reservacion> reservaciones;
 
     public Servicio(String s, String s1, boolean b) {
@@ -33,7 +32,6 @@ public class Servicio {
     }
 
     public Servicio() {
-
     }
 
     public Long getId() {
@@ -84,4 +82,3 @@ public class Servicio {
         this.reservaciones = reservaciones;
     }
 }
-

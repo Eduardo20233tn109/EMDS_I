@@ -1,16 +1,12 @@
-package com.example.SGR.sgr.categoriasServicios.modelCS;
+package com.example.SGR.sgr.model;
 
-import com.example.SGR.sgr.servicios.modelS.Servicio;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.CascadeType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
 public class CategoriaServicio {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,8 +16,10 @@ public class CategoriaServicio {
     private Boolean status;
 
     @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
+    @JsonIgnore // Evita la recursión al no serializar la relación con Servicio
     private List<Servicio> servicios;
 
+    // Getters y Setters
     public Long getId() {
         return id;
     }

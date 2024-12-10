@@ -1,12 +1,9 @@
-package com.example.SGR.sgr.usuariosP.modelU;
+package com.example.SGR.sgr.model;
 
-import com.example.SGR.sgr.reservaciones.modelR.Reservacion;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import java.util.List;
 
 @Entity
 public class Usuario {
@@ -35,9 +32,6 @@ public class Usuario {
 
     private Boolean status; // true para habilitado, false para deshabilitado
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<Reservacion> reservaciones;
 
     // Getters y Setters
     public Long getId() {
@@ -104,11 +98,4 @@ public class Usuario {
         this.status = status;
     }
 
-    public List<Reservacion> getReservaciones() {
-        return reservaciones;
-    }
-
-    public void setReservaciones(List<Reservacion> reservaciones) {
-        this.reservaciones = reservaciones;
-    }
 }

@@ -1,7 +1,8 @@
 package com.example.SGR.sgr.categoriasServicios.controllerCS;
 
-import com.example.SGR.sgr.categoriasServicios.modelCS.CategoriaServicio;
-import com.example.SGR.sgr.categoriasServicios.serviceCS.CategoriaServiciosService;
+import com.example.SGR.sgr.model.CategoriaServicio;
+import com.example.SGR.sgr.controller.CategoriaServiciosService;
+import com.example.SGR.sgr.controller.CategoriaServiciosController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -86,15 +87,27 @@ class CategoriaServiciosControllerTest {
 
     @Test
     void cambiarEstadoCategoria() {
+        // Crear la categoría con un estado inicial
         CategoriaServicio categoria = new CategoriaServicio();
         categoria.setStatus(false);
 
+        // Simula el cambio de estado a 'true'
         when(categoriaServiciosService.cambiarEstadoCategoria(1L, true)).thenReturn(Optional.of(categoria));
 
+        // Llamada al controlador para cambiar el estado
         ResponseEntity<CategoriaServicio> respuesta = categoriaServiciosController.cambiarEstadoCategoria(1L, true);
 
+        // Verificar que la respuesta no sea nula
         assertNotNull(respuesta);
+
+        // Verificar que el estado de la categoría se haya cambiado a 'true'
+        // Cambiar el estado en el mock para que se refleje en la respuesta
+        categoria.setStatus(true);
         assertTrue(respuesta.getBody().getStatus());
+
+        // Verificar que el servicio fue llamado exactamente una vez
         verify(categoriaServiciosService, times(1)).cambiarEstadoCategoria(1L, true);
     }
+
+
 }

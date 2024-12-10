@@ -1,7 +1,7 @@
-package com.example.SGR.sgr.categoriasServicios.serviceCS;
+package com.example.SGR.sgr.controller;
 
-import com.example.SGR.sgr.categoriasServicios.modelCS.CategoriaServicio;
-import com.example.SGR.sgr.categoriasServicios.utilsCS.CategoriaServicioRepository;
+import com.example.SGR.sgr.model.CategoriaServicio;
+import com.example.SGR.sgr.utils.CategoriaServicioRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,10 +44,12 @@ public class CategoriaServiciosService {
     // Cambiar el estado de una categoría
     public Optional<CategoriaServicio> cambiarEstadoCategoria(Long id, Boolean nuevoEstado) {
         return categoriaServicioRepository.findById(id).map(categoria -> {
-            categoria.setStatus(nuevoEstado);
+            categoria.setStatus(nuevoEstado);  // Asegúrate de que el estado se actualice
             return categoriaServicioRepository.save(categoria);
         });
     }
+
+
     public Optional<CategoriaServicio> obtenerCategoriaPorId(Long id) {
         return categoriaServicioRepository.findById(id); // Busca en la base de datos por ID
     }

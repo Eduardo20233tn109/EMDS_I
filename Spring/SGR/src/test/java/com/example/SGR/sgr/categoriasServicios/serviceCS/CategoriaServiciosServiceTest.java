@@ -1,7 +1,7 @@
 package com.example.SGR.sgr.categoriasServicios.serviceCS;
-import com.example.SGR.sgr.categoriasServicios.modelCS.CategoriaServicio;
-import com.example.SGR.sgr.categoriasServicios.utilsCS.CategoriaServicioRepository;
-import com.example.SGR.sgr.categoriasServicios.serviceCS.CategoriaServiciosService;
+import com.example.SGR.sgr.model.CategoriaServicio;
+import com.example.SGR.sgr.controller.CategoriaServiciosService;
+import com.example.SGR.sgr.utils.CategoriaServicioRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

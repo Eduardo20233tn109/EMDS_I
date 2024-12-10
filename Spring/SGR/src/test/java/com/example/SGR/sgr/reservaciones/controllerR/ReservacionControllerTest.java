@@ -1,8 +1,8 @@
 package com.example.SGR.sgr.reservaciones.controllerR;
 
-import com.example.SGR.sgr.reservaciones.modelR.Reservacion;
-import com.example.SGR.sgr.reservaciones.serviceR.ReservacionService;
-import com.example.SGR.sgr.reservaciones.utilsR.ReservacionRepository;
+import com.example.SGR.sgr.model.Reservacion;
+import com.example.SGR.sgr.controller.ReservacionService;
+import com.example.SGR.sgr.utils.ReservacionRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 

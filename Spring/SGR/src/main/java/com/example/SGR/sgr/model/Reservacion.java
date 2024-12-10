@@ -1,11 +1,10 @@
-package com.example.SGR.sgr.reservaciones.modelR;
+package com.example.SGR.sgr.model;
 
-import com.example.SGR.sgr.servicios.modelS.Servicio;
-import com.example.SGR.sgr.usuariosP.modelU.Usuario;
 import jakarta.persistence.*;
 
 @Entity
 public class Reservacion {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,10 +17,6 @@ public class Reservacion {
     @JoinColumn(name = "servicio_id")
     private Servicio servicio;
 
-    @ManyToOne
-    @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
-
     public Reservacion(String s, String s1, boolean b) {
         this.nombre = s;
         this.descripcion = s1;
@@ -31,7 +26,6 @@ public class Reservacion {
     public Reservacion() {
 
     }
-
 
     public Long getId() {
         return id;
@@ -72,13 +66,4 @@ public class Reservacion {
     public void setServicio(Servicio servicio) {
         this.servicio = servicio;
     }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
 }
-

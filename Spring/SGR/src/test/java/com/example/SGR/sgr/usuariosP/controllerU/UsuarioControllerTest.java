@@ -1,7 +1,8 @@
 package com.example.SGR.sgr.usuariosP.controllerU;
 
-import com.example.SGR.sgr.usuariosP.modelU.Usuario;
-import com.example.SGR.sgr.usuariosP.utilsU.UsuarioRepository;
+import com.example.SGR.sgr.controller.UsuarioController;
+import com.example.SGR.sgr.model.Usuario;
+import com.example.SGR.sgr.utils.UsuarioRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
