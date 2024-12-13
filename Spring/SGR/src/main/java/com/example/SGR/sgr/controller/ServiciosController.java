@@ -27,6 +27,11 @@ public class ServiciosController {
     public ResponseEntity<?> consultarServicios() {
         return servicioService.consultarServicios();
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<?> obtenerServicioPorId(@PathVariable Long id) {
+        return servicioService.consultarServicioPorId(id);
+    }
+
 
     // Consultar servicios activos
     @GetMapping("/activos")

@@ -10,5 +10,6 @@ import java.util.List;
 public interface ReservacionRepository extends JpaRepository<Reservacion, Long> {
     List<Reservacion> findByStatus(Boolean status); // Para consultar reservaciones activas o inactivas
 
+
 }
 

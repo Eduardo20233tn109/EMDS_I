@@ -27,6 +27,16 @@ public class ServicioService {
         return servicioRepository.findByStatus(true);
     }
 
+    // Consultar un servicio por ID
+    public ResponseEntity<?> consultarServicioPorId(Long id) {
+        Optional<Servicio> servicio = servicioRepository.findById(id);
+
+        if (!servicio.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Servicio no encontrado con ID: " + id);
+        }
+
+        return ResponseEntity.ok(servicio.get());
+    }
 
     // Registrar un nuevo servicio
     public ResponseEntity<?> registrarServicio(Servicio servicio) {

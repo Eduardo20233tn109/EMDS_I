@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface CategoriaServicioRepository extends JpaRepository<CategoriaServicio, Long> {
+    boolean existsByNombre(String nombre);
     List<CategoriaServicio> findByStatus(Boolean status); // Consultar categorías activas
-
 }
 

@@ -16,37 +16,33 @@ public class ReservacionController {
         this.reservacionService = reservacionService;
     }
 
-    // Registrar una nueva reservación
     @PostMapping("/registrar")
-    public ResponseEntity<Reservacion> registrarReservacion(@RequestBody Reservacion reservacion) {
-        return ResponseEntity.ok(reservacionService.registrarReservacion(reservacion));
+    public ResponseEntity<?> registrarReservacion(@RequestBody Reservacion reservacion) {
+        return reservacionService.registrarReservacion(reservacion);
     }
 
-    // Consultar todas las reservaciones
     @GetMapping("/consultar")
     public ResponseEntity<List<Reservacion>> consultarReservaciones() {
-        return ResponseEntity.ok(reservacionService.consultarReservaciones());
+        return reservacionService.consultarReservaciones();
     }
 
-    // Consultar reservaciones activas
     @GetMapping("/activas")
     public ResponseEntity<List<Reservacion>> consultarReservacionesActivas() {
-        return ResponseEntity.ok(reservacionService.consultarReservacionesActivas());
+        return reservacionService.consultarReservacionesActivas();
     }
 
-    // Actualizar una reservación
+    @GetMapping("/{id}")
+    public ResponseEntity<?> obtenerReservacionPorId(@PathVariable Long id) {
+        return reservacionService.obtenerReservacionPorId(id);
+    }
+
     @PutMapping("/{id}")
-    public ResponseEntity<Reservacion> actualizarReservacion(@PathVariable Long id, @RequestBody Reservacion reservacion) {
-        return reservacionService.actualizarReservacion(id, reservacion)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<?> actualizarReservacion(@PathVariable Long id, @RequestBody Reservacion reservacion) {
+        return reservacionService.actualizarReservacion(id, reservacion);
     }
 
-    // Cambiar el estado de una reservación
     @PatchMapping("/{id}/estado")
-    public ResponseEntity<Reservacion> cambiarEstadoReservacion(@PathVariable Long id, @RequestParam Boolean estado) {
-        return reservacionService.cambiarEstadoReservacion(id, estado)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<?> cambiarEstadoReservacion(@PathVariable Long id, @RequestParam Boolean estado) {
+        return reservacionService.cambiarEstadoReservacion(id, estado);
     }
 }
